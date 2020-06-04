@@ -19,6 +19,7 @@
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^5.9.6",
         "mongoose-unique-validator": "^2.0.3",
+        "nodemon": "^2.0.4",
         "serve-index": "^1.9.1"
     }
 }
