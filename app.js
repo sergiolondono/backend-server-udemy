@@ -2,15 +2,19 @@
 var express = require('express');
 var mongoose = require('mongoose');
 
+require('dotenv').config();
+
 // Inicializar variables
 var app = express();
+
+console.log(process.env);
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
     next();
-  });
+});
 
 // Importar Rutas
 var appRoutes = require('./routes/app');
@@ -23,7 +27,7 @@ var imagenesRoutes = require('./routes/imagenes');
 var uploadRoutes = require('./routes/upload');
 
 // Establecer conexión a la base de datos
-mongoose.connection.openUri('mongodb://localhost:27017/HospitalDB', (err, res) => {
+mongoose.connection.openUri(process.env.DB_CNN, (err, res) => {
     if (err) throw err;
 
     console.log('Database: \x1b[32m%s\x1b[0m', 'online');
@@ -45,6 +49,6 @@ app.use('/img', imagenesRoutes);
 app.use('/', appRoutes);
 
 // Escuchar peticiones
-app.listen(3000, () => {
-    console.log('Express server port 3000: \x1b[32m%s\x1b[0m', 'online');
+app.listen(process.env.PORT, () => {
+    console.log('Express server port ' + process.env.PORT + ': \x1b[32m%s\x1b[0m', 'online');
 });
